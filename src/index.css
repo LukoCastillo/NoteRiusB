@@ -1,0 +1,15 @@
+.homePage,.createNote{
+    padding: 10px;
+}
+
+.actionBar{
+    margin-bottom: 10px;
+}
+
+.list-group-item{
+    padding: 3px;
+}
+
+.btnCreateNote{
+    margin-bottom: 10px;
+}
