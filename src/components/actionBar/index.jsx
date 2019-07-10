@@ -14,7 +14,6 @@ const RedirectButton = withRouter(({ children, history, onCleanFilter }) => (
         size="sm"
         onClick={() => {
             history.push('/createNote');
-            onCleanFilter();
         }}>
         {children}
     </Button>
@@ -31,17 +30,15 @@ class ActionBar extends React.Component {
         let newFilter = e.target.value;
         this.props.onFilterNote({ text: newFilter });
     }
-    onCleanFilter = () => {
-        this.props.onFilterNote({ text: "" });
-    }
+
     render() {
         return (<React.Fragment>
             <Row className="actionBar">
-                <Col xs={10}>
+                <Col xs={9}>
                     <InputSearch onChange={this.onFilter} text={this.props.filter.text} />
                 </Col>
-                <Col xs={2}>
-                    <RedirectButton onCleanFilter={this.onCleanFilter}>Create Note</RedirectButton>
+                <Col xs={3}>
+                    <RedirectButton onCleanFilter={this.onCleanFilter}>Add note</RedirectButton>
                 </Col>
             </Row>
         </React.Fragment>)

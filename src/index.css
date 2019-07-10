@@ -1,3 +1,7 @@
+.App{
+    width: 400px;
+    height: 500px;
+}
 .homePage,.createNote{
     padding: 10px;
 }
@@ -12,4 +16,13 @@
 
 .btnCreateNote{
     margin-bottom: 10px;
+}
+
+.noteForm .inputForm{
+    border: 1px dotted;
+}
+
+.noteForm .txtNoteBody{
+    font-family: 'Lucida Console';
+    font-size: 13px;
 }

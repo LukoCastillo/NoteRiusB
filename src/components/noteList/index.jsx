@@ -5,29 +5,35 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteNote } from '../../redux/actions/note-actions';
-
+import { filterNote } from '../../redux/actions/filter-actions';
 
 function NoteItem({ note, onClick }) {
     return (<ListGroup.Item>
         <Row>
-            <Col xs={10}>
+            <Col xs={9}>
                 <Link to={"/createNote/" + note.id} className="nav-link">{note.title}</Link>
             </Col>
-            <Col xs={2}>
+            <Col xs={3}>
                 <Button variant="danger" size="sm" onClick={onClick}>Delete</Button>
             </Col>
         </Row>
     </ListGroup.Item>);
 }
 
-const NoteList = ({ notes, filter, onDeleteNote }) => {
-    let notesFilter = filter.text === "" ? notes : notes.filter((n) => n.title.includes(filter.text));
-    return (<ListGroup variant="flush">
-        {notesFilter.map((note) => (
-            <NoteItem key={note.id} note={note} onClick={() => onDeleteNote(note.id)} />
-        ))}
-    </ListGroup>)
-};
+
+class NoteList extends React.Component {
+    componentDidMount() {
+        this.props.onClearFilter({ text: "" });
+    }
+    render() {
+        let notesFilter = this.props.filter.text === "" ? this.props.notes : this.props.notes.filter((n) => n.title.includes(this.props.filter.text));
+        return (<ListGroup variant="flush">
+            {notesFilter.map((note) => (
+                <NoteItem key={note.id} note={note} onClick={() => this.props.onDeleteNote(note.id)} />
+            ))}
+        </ListGroup>)
+    }
+}
 
 
 const mapStateToProps = (state, props) => {
@@ -39,7 +45,8 @@ const mapStateToProps = (state, props) => {
 
 const mapActionToProps = (dispatch, props) => {
     return bindActionCreators({
-        onDeleteNote: deleteNote
+        onDeleteNote: deleteNote,
+        onClearFilter: filterNote
     }, dispatch)
 };
 

@@ -8,7 +8,7 @@ class HeaderApp extends React.Component {
         return (<div>
             <Navbar bg="light" expand="lg">
                 <Link to="/home" className="navbar-brand">
-                    NoteRiusB
+                    NoteApp
                 </Link>
             </Navbar>
         </div>)
