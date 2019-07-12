@@ -1,0 +1,36 @@
+.App{
+    width: 400px;
+    height: 500px;
+}
+.homePage,.createNote,.loginPage{
+    padding: 10px;
+}
+.loginPage{
+    text-align: center;
+    margin-top: 10px;
+}
+.loginPage button.signInButton{
+    color: #fff!important;
+    background-color: #4285f4!important;
+}
+
+.actionBar{
+    margin-bottom: 10px;
+}
+
+.list-group-item{
+    padding: 3px;
+}
+
+.btnCreateNote{
+    margin-bottom: 10px;
+}
+
+.noteForm .inputForm{
+    border: 1px dotted;
+}
+
+.noteForm .txtNoteBody{
+    font-family: 'Lucida Console';
+    font-size: 13px;
+}
