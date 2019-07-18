@@ -7,6 +7,9 @@ import { bindActionCreators } from 'redux';
 import { deleteNote } from '../../redux/actions/note-actions';
 import { filterNote } from '../../redux/actions/filter-actions';
 
+import SweetAlert from 'sweetalert-react';
+import 'sweetalert/dist/sweetalert.css';
+
 function NoteItem({ note, onClick }) {
     return (<ListGroup.Item>
         <Row>
@@ -22,16 +25,45 @@ function NoteItem({ note, onClick }) {
 
 
 class NoteList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { showModal: false, noteId: "" };
+
+    }
     componentDidMount() {
         this.props.onClearFilter({ text: "" });
     }
+    onStartDeleteNote = (idx) => {
+        this.setState({ showModal: true, noteId: idx });
+    }
+
+    confirmDeleteNote = () => {
+        let _noteId = this.state.noteId;
+        this.setState({ showModal: false, noteId: "" });
+        this.props.onDeleteNote(this.props.user._id, _noteId);
+    }
+
+    cancelDeleteNote = () => {
+        this.setState({ showModal: false, noteId: "" });
+    }
+
     render() {
         let notesFilter = this.props.filter.text === "" ? this.props.notes : this.props.notes.filter((n) => n.title.includes(this.props.filter.text));
-        return (<ListGroup variant="flush">
-            {notesFilter.map((note) => (
-                <NoteItem key={note.id} note={note} onClick={() => this.props.onDeleteNote(note.id)} />
-            ))}
-        </ListGroup>)
+        return (<React.Fragment>
+            <ListGroup variant="flush">
+                {notesFilter.map((note) => (
+                    <NoteItem key={note.id} note={note} onClick={() => { this.onStartDeleteNote(note.id); }} />
+                ))}
+            </ListGroup>
+            <SweetAlert
+                show={this.state.showModal}
+                title="Delete Note"
+                text="Are you sure to want to delete?"
+                showCancelButton
+                onConfirm={this.confirmDeleteNote}
+                onCancel={this.cancelDeleteNote}
+            />
+        </React.Fragment>)
     }
 }
 
@@ -39,7 +71,8 @@ class NoteList extends React.Component {
 const mapStateToProps = (state, props) => {
     return {
         notes: state.notes,
-        filter: state.filter
+        filter: state.filter,
+        user: state.login
     }
 };
 

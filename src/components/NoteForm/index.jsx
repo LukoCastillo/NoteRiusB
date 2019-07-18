@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateNote } from '../../redux/actions/note-actions';
+import { insertTabTextArea } from '../../common/commonFunctions';
 import uuid from "uuid";
 
 import { withRouter } from 'react-router-dom';
@@ -17,8 +18,7 @@ class NoteForm extends React.Component {
         if (_id === "")
             _id = uuid.v4();
 
-
-        this.props.onUpdateNote({ id: _id, title: txtTitle, body: txtBody });
+        this.props.onUpdateNote(this.props.user._id, { id: _id, title: txtTitle, body: txtBody });
         this.props.history.push('/home');
     }
     componentDidMount() {
@@ -36,39 +36,7 @@ class NoteForm extends React.Component {
         this.noteId.value = updateNote.id;
     }
     insertTab = (event) => {
-
-        let tabKeyCode = 9;
-        let obj = event.target;
-        let keycode;
-
-        if (event.which)
-            keycode = event.which;
-        else
-            keycode = event.keyCode;
-        if (keycode === tabKeyCode) {
-            if (event.type === "keydown") {
-                if (obj.setSelectionRange) {
-                    let s = obj.selectionStart;
-                    let e = obj.selectionEnd;
-                    obj.value = obj.value.substring(0, s) + "\t" + obj.value.substr(e);
-                    obj.setSelectionRange(s + 1, s + 1);
-                    obj.focus();
-                } else if (obj.createTextRange) {
-                    document.selection.createRange().text = "\t"
-                    obj.onblur = function () {
-                        this.focus();
-                        this.onblur = null;
-                    }
-                        ;
-                } else { }
-            }
-            if (event.returnValue)
-                event.returnValue = false;
-            if (event.preventDefault)
-                event.preventDefault();
-            return false;
-        }
-        return true;
+        insertTabTextArea(event);
     }
     render() {
         return (<div className="noteForm">
@@ -95,7 +63,8 @@ class NoteForm extends React.Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        notes: state.notes
+        notes: state.notes,
+        user: state.login
     }
 };
 

@@ -1,4 +1,4 @@
-import { UPDATE_NOTE, DELETE_NOTE } from '../actions/note-actions';
+import { UPDATE_NOTE, DELETE_NOTE, LOAD_NOTES } from '../actions/note-actions';
 
 
 const initalState = [];
@@ -14,8 +14,9 @@ const noteReducer = (state = initalState, { type, payload }) => {
                 newState = [...state, payload.note];
             return newState;
         case DELETE_NOTE:
-            debugger;
             return state.filter((note) => note.id !== payload.id);
+        case LOAD_NOTES:
+            return payload.notes.map((item) => item);
         default:
             return state;
     }

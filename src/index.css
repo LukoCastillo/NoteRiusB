@@ -2,8 +2,16 @@
     width: 400px;
     height: 500px;
 }
-.homePage,.createNote{
+.homePage,.createNote,.loginPage{
     padding: 10px;
+}
+.loginPage{
+    text-align: center;
+    margin-top: 10px;
+}
+.loginPage button.signInButton{
+    color: #fff!important;
+    background-color: #4285f4!important;
 }
 
 .actionBar{

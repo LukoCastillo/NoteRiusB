@@ -2,13 +2,17 @@
 import thunk from 'redux-thunk';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 
+
+
 import noteReducer from './reducers/note-reducers';
 import filterReducer from './reducers/filter-reducers';
+import loginReducer from './reducers/login-reducer';
 
 //project reducers
 const allReducers = combineReducers({
     notes: noteReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    login: loginReducer
 });
 //create init store
 
