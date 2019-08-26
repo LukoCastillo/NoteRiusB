@@ -2,11 +2,24 @@ import React from 'react';
 import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { syncUserNotes } from '../../redux/actions/note-actions';
 
 import UserHub from './userHub';
 
 
 class HeaderApp extends React.Component {
+
+    onSyncUser = () =>{
+        if(this.confirmMsg()){
+            this.props.syncUserNotes();
+        }
+    };
+
+    confirmMsg = () => {
+        return window.confirm("Do you really want to sync?");
+    }
+    
 
     render() {
         return (<div>
@@ -20,7 +33,7 @@ class HeaderApp extends React.Component {
                     <div className=" mr-sm-2">{this.props.user.email === "" ?
                         (<Link to="/login" className="nav-link">Login to sync</Link>)
                         :
-                        (<UserHub {...this.props.user} />)
+                        (<UserHub {...this.props.user}  onSync={this.onSyncUser} />)
                     }</div>
                 </div>
             </Navbar>
@@ -35,7 +48,9 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapActionToProps = (dispatch, props) => {
-    return {};
+    return bindActionCreators({
+        syncUserNotes: syncUserNotes,
+    }, dispatch)
 };
 
 export default connect(mapStateToProps, mapActionToProps, null)(HeaderApp);

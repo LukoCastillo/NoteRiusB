@@ -1,10 +1,10 @@
 
 import DB from '../../db';
 
-
 export const UPDATE_NOTE = 'note:updateNote';
 export const LOAD_NOTES = 'note:loadNotes';
 export const DELETE_NOTE = 'note:deleteNote';
+export const SYNC_NOTE= "note:syncNote";
 
 export function loadNote(userId) {
     return function (dispatch) {
@@ -49,6 +49,20 @@ export function deleteNote(userId, noteId) {
             });
         }).catch((err) => {
             console.log(err);
+        });
+    }
+}
+
+export function syncUserNotes(userId){
+    return function (dispatch) {
+        const db = new DB();
+        db.syncUserNotes(userId).then((res) => {
+            dispatch({
+                type: SYNC_NOTE,
+                payload: {
+                    notes: res
+                }
+            });
         });
     }
 }

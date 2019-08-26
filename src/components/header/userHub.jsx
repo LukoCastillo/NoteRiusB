@@ -1,14 +1,21 @@
 import React from 'react';
+import  './header.css';
 
-const UserHub = (props) => {
-    const style = {
-        borderRadius: '50%',
-        width: '39px',
-        marginLeft: '10px'
+
+export default class UserHub extends React.Component {
+
+    handleOnclick = () =>{
+        this.props.onSync();
+    };
+
+    render(){
+        const {imageUrl} = this.props;
+        return(<div>
+            <img src={imageUrl} 
+            alt=""  
+            className="userImg"
+            onClick={this.handleOnclick}
+            />
+        </div>);
     }
-    return (<div>
-        <img src={props.imageUrl} alt="" style={style} />
-    </div>);
 };
-
-export default UserHub;

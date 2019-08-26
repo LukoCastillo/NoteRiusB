@@ -1,0 +1,14 @@
+.userImg{
+    border-radius: 50%;
+    width: 39px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.userImg.online{
+    border: 2px solid green;
+}
+
+.userImg.offline{
+    border: 2px solid gray;
+}
